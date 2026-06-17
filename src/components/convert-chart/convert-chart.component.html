@@ -1,0 +1,13 @@
+<div class="ch-tabs">
+  <button [class]="`c-tab ${activeTab() == '15m' ? 'act' : ''}`" (click)="setTab('15m')">
+    15m
+  </button>
+  <button [class]="`c-tab ${activeTab() == '1h' ? 'act' : ''}`" (click)="setTab('1h')">1h</button>
+  <button [class]="`c-tab ${activeTab() == '1d' ? 'act' : ''}`" (click)="setTab('1d')">1d</button>
+  <button [class]="`c-tab ${activeTab() == '1w' ? 'act' : ''}`" (click)="setTab('1w')">1w</button>
+  <button [class]="`c-tab ${activeTab() == '1m' ? 'act' : ''}`" (click)="setTab('1m')">1m</button>
+  <button [class]="`c-tab ${activeTab() == '1y' ? 'act' : ''}`" (click)="setTab('1y')">1y</button>
+</div>
+<div class="ch-svg">
+   <app-dynamic-line-chart [data]="chart_items()" />
+</div>

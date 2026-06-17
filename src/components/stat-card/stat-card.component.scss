@@ -1,0 +1,59 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.stat-card {
+  @include glass-card($space-5);
+  @include card-hover;
+  @include fade-up;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+
+  &__accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+
+  &--sc-cyan  .stat-card__accent { background: linear-gradient(90deg, $cyan, $cyan-alt); }
+  &--sc-gold  .stat-card__accent { background: linear-gradient(90deg, $gold, #ff8c42); }
+  &--sc-blue  .stat-card__accent { background: linear-gradient(90deg, $cyan-alt, #6c7fff); }
+  &--sc-red   .stat-card__accent { background: linear-gradient(90deg, $red, #ff6e9c); }
+
+  &__label {
+    @include label-caps;
+    margin-top: $space-2;
+  }
+
+  &__value {
+    @include mono-value($font-size-2xl, 600);
+    margin-top: 2px;
+  }
+
+  &__change {
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__icon {
+    position: absolute;
+    right: $space-4;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+}
+
+.text-up   { color: $cyan; }
+.text-gold { color: $gold; }
+.text-red { color: $red; }
+.text-muted { color: $text-secondary; }

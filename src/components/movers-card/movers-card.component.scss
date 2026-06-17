@@ -1,0 +1,52 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+
+
+.movers-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.28s);
+}
+
+.mover-row {
+  display: flex;
+  align-items: center;
+  gap: calc($space-2 + 2px);
+  padding: 9px calc($space-2 + 2px);
+  border-radius: $radius-md;
+  margin-bottom: $space-1;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover { background: rgba(255, 255, 255, 0.04); }
+  &:last-child { margin-bottom: 0; }
+
+  &__icon {
+    @include icon-circle(34px);
+    border-radius: $radius-md;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  &__info { flex: 1; }
+  &__name { font-size: $font-size-base; font-weight: 600; color: $text-primary; }
+  &__mkt  { font-size: $font-size-xs; font-family: $font-mono; color: $text-secondary; }
+  &__spark { flex-shrink: 0; }
+  &__price { text-align: right; }
+  &__price-val { font-family: $font-mono; font-size: $font-size-base; font-weight: 500; color: $text-primary; }
+  &__price-chg { font-family: $font-mono; font-size: $font-size-xs; }
+}
+
+.text-up { color: $cyan; }
+.text-dn  { color: $red; }
+
+.section-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+  &__title { font-size: $font-size-md; font-weight: 700; color: $text-primary; }
+  &__action { @include glow-btn($cyan); }
+}

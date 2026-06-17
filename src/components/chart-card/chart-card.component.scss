@@ -1,0 +1,162 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.chart-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.2s);
+
+  &__header {
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: $space-3;
+    margin-bottom: $space-4;
+  }
+
+  &__coin {
+    @include flex-center;
+    gap: calc($space-2 + 2px);
+  }
+
+  &__coin-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, rgba(247,147,26,0.18), rgba(247,147,26,0.05));
+    border: 1px solid rgba(247,147,26,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+
+  &__coin-name {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  &__coin-ticker {
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    background: $cyan-dim;
+    color: $cyan;
+    padding: 2px 8px;
+    border-radius: $radius-full;
+    display: inline-block;
+    margin-top: 2px;
+  }
+
+  &__price-block { text-align: right; }
+
+  &__price {
+    @include mono-value($font-size-2xl, 600);
+    color: $text-primary;
+  }
+
+  &__price-change {
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+    margin-top: 3px;
+  }
+
+  // Tabs
+  &__tabs {
+    display: flex;
+    gap: 3px;
+    margin-bottom: $space-3;
+  }
+
+  &__tab {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    font-family: $font-mono;
+    padding: 4px 11px;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    color: $text-secondary;
+    background: none;
+    border: 1px solid transparent;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $text-primary;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &--active {
+      background: $cyan-dim;
+      border-color: $border-accent;
+      color: $cyan;
+    }
+  }
+
+  // Chart
+  &__chart {
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    border-radius: $radius-sm;
+  }
+
+  // Stats row
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-4;
+    margin-top: $space-3;
+  }
+}
+
+.chart-stat {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-family: $font-mono;
+
+  span {
+    color: $text-primary;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+}
+
+.text-up { color: $cyan; }
+
+// Quick Actions
+.chart-card__actions {
+  display: flex;
+  gap: $space-2;
+  margin-top: $space-4;
+  flex-wrap: wrap;
+}
+
+.qa-btn {
+  flex: 1;
+  min-width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px $space-2;
+  border-radius: $radius-md;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-subtle;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background: $cyan-glow;
+    border-color: $border-accent;
+  }
+
+  &__icon { font-size: 1rem; }
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $text-secondary;
+  }
+}

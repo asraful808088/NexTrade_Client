@@ -1,0 +1,119 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+.dash-header {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $space-4;
+  margin-bottom: $space-6;
+  width: 100%;
+  
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    @include gradient-text;
+  }
+
+  &__date {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    font-family: $font-mono;
+    margin-top: $space-1;
+  }
+
+  &__live {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: $radius-full;
+    background: rgba(0, 230, 180, 0.1);
+    border: 1px solid rgba(0, 230, 180, 0.2);
+    color: $cyan;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background: $cyan;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-4;
+
+  @include laptop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: $space-4;
+  margin-bottom: $space-4;
+  
+
+  &__chart {
+    /* full width */
+  }
+  &__alloc {
+    /* fixed side panel */
+  }
+
+  @include laptop {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+  margin-bottom: $space-4;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+
+.last-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
+}
+.l-w{  max-width: 1300px;margin: auto;margin-bottom: 10px;}
+
+
+
+.dash-header__username {
+  display: inline-block;
+  max-width: 8ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}

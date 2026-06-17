@@ -1,0 +1,426 @@
+
+<div class="demo-bg"></div>
+
+<div class="demo-trigger">
+  <div class="demo-title">// NexTrade — Transaction Dialog Demo</div>
+  <div class="demo-btns">
+    <button class="demo-btn act" onclick="openDialog('buy')">💳 Buy</button>
+    <button class="demo-btn" onclick="openDialog('sell')">📉 Sell</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="MODAL" onclick="handleBgClick(event)">
+<div class="dialog" id="DIALOG">
+
+
+  <div class="success-overlay" id="SUCCESS">
+    <div class="success-ring-wrap">
+      <div class="success-ring">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-ring-pulse"></div>
+      <div class="success-ring-pulse2"></div>
+    </div>
+    <div class="success-title" id="SUC_TITLE">Transaction Submitted!</div>
+    <div class="success-sub" id="SUC_SUB">Your transaction is being processed. You'll receive a confirmation shortly.</div>
+    <div class="success-id" id="SUC_ID">TXN #—</div>
+    <button class="success-done" onclick="closeSucess()">Done</button>
+    <button class="success-another" onclick="resetDialog()">Make another transaction →</button>
+  </div>
+
+  <div class="d-head">
+    <div class="d-head-left">
+      <div class="d-head-ico" id="D_ICO">💳</div>
+      <div class="d-head-info">
+        <div class="d-head-title" id="D_TITLE">Buy Crypto</div>
+        <div class="d-head-sub" id="D_SUB">Instant purchase · Best rates</div>
+      </div>
+    </div>
+    <button class="d-close" onclick="closeDialog()">✕</button>
+  </div>
+
+  <div class="tab-rail">
+    <div class="t-btn" data-tab="buy" onclick="switchTab('buy')" style="--tab-bg:rgba(0,230,180,.1);--tab-bd:rgba(0,230,180,.22);--tab-c:#00e6b4">
+      <span class="t-ico">💳</span><span class="t-lbl">Buy</span>
+    </div>
+    <div class="t-btn" data-tab="sell" onclick="switchTab('sell')" style="--tab-bg:rgba(255,68,102,.1);--tab-bd:rgba(255,68,102,.22);--tab-c:#ff4466">
+      <span class="t-ico">📉</span><span class="t-lbl">Sell</span>
+    </div>
+    <div class="t-btn" data-tab="convert" onclick="switchTab('convert')" style="--tab-bg:rgba(0,196,245,.1);--tab-bd:rgba(0,196,245,.22);--tab-c:#00c4f5">
+      <span class="t-ico">🔄</span><span class="t-lbl">Convert</span>
+    </div>
+    <div class="t-btn" data-tab="send" onclick="switchTab('send')" style="--tab-bg:rgba(167,139,250,.1);--tab-bd:rgba(167,139,250,.22);--tab-c:#a78bfa">
+      <span class="t-ico">📤</span><span class="t-lbl">Send</span>
+    </div>
+    <div class="t-btn" data-tab="receive" onclick="switchTab('receive')" style="--tab-bg:rgba(0,230,180,.1);--tab-bd:rgba(0,230,180,.22);--tab-c:#00e6b4">
+      <span class="t-ico">📥</span><span class="t-lbl">Receive</span>
+    </div>
+    <div class="t-btn" data-tab="deposit" onclick="switchTab('deposit')" style="--tab-bg:rgba(245,200,66,.1);--tab-bd:rgba(245,200,66,.22);--tab-c:#f5c842">
+      <span class="t-ico">🏦</span><span class="t-lbl">Deposit</span>
+    </div>
+  </div>
+
+  <!-- ════ PANELS ════ -->
+  <div class="panels">
+
+    <!-- ── BUY ── -->
+    <div class="panel" id="P_buy">
+      <div>
+        <div class="f-label">You Pay <span id="BUY_BAL">Balance: $5,200.00</span></div>
+        <div class="amt-block">
+          <div class="amt-row">
+            <input class="amt-number" id="BUY_FROM" type="number" placeholder="0.00" value="500" oninput="calcBuy()"/>
+            <div class="tok-pill" onclick="openDrop('BUY_FROM_DROP','BUY_FROM_SYM','BUY_FROM_ICO','fiat')">
+              <div class="tok-ico" id="BUY_FROM_ICO" style="background:rgba(245,200,66,.12);color:#f5c842">$</div>
+              <span class="tok-sym" id="BUY_FROM_SYM">USD</span>
+              <div class="tok-chev"></div>
+              <!-- drop -->
+              <div class="tok-drop" id="BUY_FROM_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'BUY_FROM_DROP')" onclick="event.stopPropagation()"/>
+                <div id="BUY_FROM_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="BUY_FROM_USD">$500.00</span>
+            <span class="amt-bal">Bal: <b onclick="setMaxBuy()">$5,200.00</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pct-row">
+        <button class="pct-btn" onclick="setBuyPct(25)">25%</button>
+        <button class="pct-btn" onclick="setBuyPct(50)">50%</button>
+        <button class="pct-btn" onclick="setBuyPct(75)">75%</button>
+        <button class="pct-btn" onclick="setMaxBuy()">MAX</button>
+      </div>
+
+      <div>
+        <div class="f-label">You Receive</div>
+        <div class="amt-block" style="background:rgba(0,230,180,.025);border-color:rgba(0,230,180,.12)">
+          <div class="amt-row">
+            <input class="amt-number" id="BUY_TO" type="number" placeholder="0.00" readonly style="opacity:.85;cursor:default"/>
+            <div class="tok-pill" onclick="openDrop('BUY_TO_DROP','BUY_TO_SYM','BUY_TO_ICO','crypto')">
+              <div class="tok-ico" id="BUY_TO_ICO" style="background:rgba(247,147,26,.12);color:#f7931a">₿</div>
+              <span class="tok-sym" id="BUY_TO_SYM">BTC</span>
+              <div class="tok-chev"></div>
+              <div class="tok-drop" id="BUY_TO_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'BUY_TO_DROP')" onclick="event.stopPropagation()"/>
+                <div id="BUY_TO_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="BUY_TO_USD">≈ $499.50</span>
+            <span class="amt-bal" style="color:var(--cy)">Best price ✓</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">Payment Method</div>
+        <div class="pm-row">
+          <div class="pm-opt sel" onclick="selPm(this)"><div class="pm-ico">💳</div><div class="pm-name">Card</div><div class="pm-sub">Instant</div></div>
+          <div class="pm-opt" onclick="selPm(this)"><div class="pm-ico">🏦</div><div class="pm-name">Bank</div><div class="pm-sub">1–2 days</div></div>
+          <div class="pm-opt" onclick="selPm(this)"><div class="pm-ico">🪙</div><div class="pm-name">Crypto</div><div class="pm-sub">Instant</div></div>
+          <div class="pm-opt" onclick="selPm(this)"><div class="pm-ico">📱</div><div class="pm-name">Apple Pay</div><div class="pm-sub">Instant</div></div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="sum-row"><span class="sum-l">Rate</span><span class="sum-r" id="BUY_RATE">1 BTC = $67,482.55</span></div>
+        <div class="sum-row"><span class="sum-l">Fee (0.5%)</span><span class="sum-r">$2.50</span></div>
+        <div class="sum-row"><span class="sum-l">Processing</span><span class="sum-r">Free</span></div>
+        <div class="sum-div"></div>
+        <div class="sum-row"><span class="sum-l" style="font-weight:700;color:var(--wh)">You get</span><span class="sum-r hl" id="BUY_GET">0.007332 BTC</span></div>
+      </div>
+
+      <button class="cta-btn" id="BUY_BTN" style="background:linear-gradient(135deg,var(--cy),var(--cy2))" onclick="submit('buy')">
+        <span class="btn-txt">Buy BTC →</span>
+        <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </button>
+    </div>
+
+    <!-- ── SELL ── -->
+    <div class="panel" id="P_sell">
+      <div>
+        <div class="f-label">You Sell <span id="SELL_BAL">Balance: 0.8402 BTC</span></div>
+        <div class="amt-block">
+          <div class="amt-row">
+            <input class="amt-number" id="SELL_FROM" type="number" placeholder="0.00" value="0.1" oninput="calcSell()"/>
+            <div class="tok-pill" onclick="openDrop('SELL_FROM_DROP','SELL_FROM_SYM','SELL_FROM_ICO','crypto')">
+              <div class="tok-ico" id="SELL_FROM_ICO" style="background:rgba(247,147,26,.12);color:#f7931a">₿</div>
+              <span class="tok-sym" id="SELL_FROM_SYM">BTC</span>
+              <div class="tok-chev"></div>
+              <div class="tok-drop" id="SELL_FROM_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'SELL_FROM_DROP')" onclick="event.stopPropagation()"/>
+                <div id="SELL_FROM_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="SELL_USD">≈ $6,748.26</span>
+            <span class="amt-bal">Bal: <b onclick="setMaxSell()">0.8402 BTC</b></span>
+          </div>
+        </div>
+        <div class="pct-row" style="margin-top:.5rem">
+          <button class="pct-btn" onclick="setSellPct(25)">25%</button>
+          <button class="pct-btn" onclick="setSellPct(50)">50%</button>
+          <button class="pct-btn" onclick="setSellPct(75)">75%</button>
+          <button class="pct-btn" onclick="setMaxSell()">MAX</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">You Receive</div>
+        <div class="amt-block" style="background:rgba(255,68,102,.025);border-color:rgba(255,68,102,.12)">
+          <div class="amt-row">
+            <input class="amt-number" id="SELL_TO" type="number" placeholder="0.00" readonly style="opacity:.85;cursor:default"/>
+            <div class="tok-pill">
+              <div class="tok-ico" style="background:rgba(245,200,66,.12);color:#f5c842">$</div>
+              <span class="tok-sym">USD</span>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" style="color:var(--rd)">Market sell · 0.1% slippage</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">Payout Destination</div>
+        <select class="f-input">
+          <option>NexTrade USD Wallet</option>
+          <option>Bank Account (****4821)</option>
+          <option>USDT Wallet</option>
+        </select>
+      </div>
+
+      <div class="summary-box">
+        <div class="sum-row"><span class="sum-l">Rate</span><span class="sum-r">1 BTC = $67,482.55</span></div>
+        <div class="sum-row"><span class="sum-l">Fee (0.1%)</span><span class="sum-r" id="SELL_FEE">$6.75</span></div>
+        <div class="sum-row"><span class="sum-l">Slippage (0.1%)</span><span class="sum-r" id="SELL_SLIP">$6.75</span></div>
+        <div class="sum-div"></div>
+        <div class="sum-row"><span class="sum-l" style="font-weight:700;color:var(--wh)">You receive</span><span class="sum-r hl" id="SELL_GET">$6,734.76</span></div>
+      </div>
+
+      <button class="cta-btn" id="SELL_BTN" style="background:linear-gradient(135deg,#ff4466,#ff6b35)" onclick="submit('sell')">
+        <span class="btn-txt">Sell BTC →</span>
+        <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </button>
+    </div>
+
+    <!-- ── CONVERT ── -->
+    <div class="panel" id="P_convert">
+      <div>
+        <div class="f-label">From <span>Bal: 0.8402 BTC</span></div>
+        <div class="amt-block">
+          <div class="amt-row">
+            <input class="amt-number" id="CONV_FROM" type="number" placeholder="0.00" value="0.25" oninput="calcConv()"/>
+            <div class="tok-pill" onclick="openDrop('CONV_FROM_DROP','CONV_FROM_SYM','CONV_FROM_ICO','crypto')">
+              <div class="tok-ico" id="CONV_FROM_ICO" style="background:rgba(247,147,26,.12);color:#f7931a">₿</div>
+              <span class="tok-sym" id="CONV_FROM_SYM">BTC</span>
+              <div class="tok-chev"></div>
+              <div class="tok-drop" id="CONV_FROM_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'CONV_FROM_DROP')" onclick="event.stopPropagation()"/>
+                <div id="CONV_FROM_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="CONV_FROM_USD">≈ $16,870.64</span>
+            <span class="amt-bal">Bal: <b>0.8402 BTC</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="swap-mid">
+        <button class="sw-btn" onclick="swapConv()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+        </button>
+      </div>
+
+      <div>
+        <div class="f-label">To <span style="color:var(--cy)">after fees</span></div>
+        <div class="amt-block" style="background:rgba(0,196,245,.025);border-color:rgba(0,196,245,.12)">
+          <div class="amt-row">
+            <input class="amt-number" id="CONV_TO" type="number" placeholder="0.00" readonly style="opacity:.85;cursor:default"/>
+            <div class="tok-pill" onclick="openDrop('CONV_TO_DROP','CONV_TO_SYM','CONV_TO_ICO','crypto')">
+              <div class="tok-ico" id="CONV_TO_ICO" style="background:rgba(98,126,234,.12);color:#627EEA">Ξ</div>
+              <span class="tok-sym" id="CONV_TO_SYM">ETH</span>
+              <div class="tok-chev"></div>
+              <div class="tok-drop" id="CONV_TO_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'CONV_TO_DROP')" onclick="event.stopPropagation()"/>
+                <div id="CONV_TO_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="CONV_TO_USD">≈ $16,836.80</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="sum-row"><span class="sum-l">Rate</span><span class="sum-r" id="CONV_RATE">1 BTC = 19.014 ETH</span></div>
+        <div class="sum-row"><span class="sum-l">NexTrade fee (0.1%)</span><span class="sum-r" id="CONV_FEE">$16.87</span></div>
+        <div class="sum-row"><span class="sum-l">Price impact</span><span class="sum-r" style="color:var(--cy)">0.02%</span></div>
+        <div class="sum-div"></div>
+        <div class="sum-row"><span class="sum-l" style="font-weight:700;color:var(--wh)">Min. received</span><span class="sum-r hl" id="CONV_MIN">4.741 ETH</span></div>
+      </div>
+
+      <button class="cta-btn" style="background:linear-gradient(135deg,#00c4f5,#627EEA)" onclick="submit('convert')">
+        <span class="btn-txt" id="CONV_BTN_TXT">Convert BTC → ETH</span>
+        <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </button>
+    </div>
+
+    <!-- ── SEND ── -->
+    <div class="panel" id="P_send">
+      <div>
+        <div class="f-label">Asset & Amount <span id="SEND_BAL">Bal: 0.8402 BTC</span></div>
+        <div class="amt-block">
+          <div class="amt-row">
+            <input class="amt-number" id="SEND_AMT" type="number" placeholder="0.00" value="0.05" oninput="calcSend()"/>
+            <div class="tok-pill" onclick="openDrop('SEND_TOK_DROP','SEND_TOK_SYM','SEND_TOK_ICO','crypto')">
+              <div class="tok-ico" id="SEND_TOK_ICO" style="background:rgba(247,147,26,.12);color:#f7931a">₿</div>
+              <span class="tok-sym" id="SEND_TOK_SYM">BTC</span>
+              <div class="tok-chev"></div>
+              <div class="tok-drop" id="SEND_TOK_DROP">
+                <input class="td-search" placeholder="Search…" oninput="filterDrop(this,'SEND_TOK_DROP')" onclick="event.stopPropagation()"/>
+                <div id="SEND_TOK_DROP_LIST"></div>
+              </div>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="SEND_USD">≈ $3,374.13</span>
+            <span class="amt-bal">Bal: <b onclick="setMaxSend()">0.8402 BTC</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">Recipient Address</div>
+        <div class="addr-wrap">
+          <input class="f-input padded" id="SEND_ADDR" type="text" placeholder="0x… wallet address or ENS name"/>
+          <button class="addr-scan" onclick="toast('📷 Camera opened for QR scan')">Scan QR</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">Network</div>
+        <div class="net-row" id="SEND_NETS">
+          <div class="net-opt sel" onclick="selNet(this)"><span class="net-ico">Ξ</span>Ethereum</div>
+          <div class="net-opt" onclick="selNet(this)"><span class="net-ico">◎</span>Solana</div>
+          <div class="net-opt" onclick="selNet(this)"><span class="net-ico">⬡</span>BNB Chain</div>
+          <div class="net-opt" onclick="selNet(this)"><span class="net-ico">◈</span>Avalanche</div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="sum-row"><span class="sum-l">Amount</span><span class="sum-r" id="SEND_AMT_SUM">0.05 BTC</span></div>
+        <div class="sum-row"><span class="sum-l">Network fee</span><span class="sum-r">$2.84</span></div>
+        <div class="sum-row"><span class="sum-l">Est. arrival</span><span class="sum-r">~30 seconds</span></div>
+        <div class="sum-div"></div>
+        <div class="sum-row"><span class="sum-l" style="font-weight:700;color:var(--wh)">Total deducted</span><span class="sum-r hl" id="SEND_TOTAL">0.05 BTC + fee</span></div>
+      </div>
+
+      <button class="cta-btn" style="background:linear-gradient(135deg,var(--pu),#00c4f5)" onclick="submit('send')">
+        <span class="btn-txt">Send BTC →</span>
+        <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </button>
+    </div>
+
+    <!-- ── RECEIVE ── -->
+    <div class="panel" id="P_receive">
+      <div>
+        <div class="f-label">Select Asset to Receive</div>
+        <div class="pm-row" style="flex-wrap:wrap">
+          <div class="pm-opt sel" onclick="selRecvTok(this,'BTC','₿','rgba(247,147,26,.12)','#f7931a')"><div class="pm-ico">₿</div><div class="pm-name">BTC</div><div class="pm-sub">Bitcoin</div></div>
+          <div class="pm-opt" onclick="selRecvTok(this,'ETH','Ξ','rgba(98,126,234,.12)','#627EEA')"><div class="pm-ico">Ξ</div><div class="pm-name">ETH</div><div class="pm-sub">Ethereum</div></div>
+          <div class="pm-opt" onclick="selRecvTok(this,'SOL','◎','rgba(0,230,180,.1)','#00e6b4')"><div class="pm-ico">◎</div><div class="pm-name">SOL</div><div class="pm-sub">Solana</div></div>
+          <div class="pm-opt" onclick="selRecvTok(this,'USDT','$','rgba(245,200,66,.12)','#f5c842')"><div class="pm-ico">$</div><div class="pm-name">USDT</div><div class="pm-sub">Tether</div></div>
+        </div>
+      </div>
+
+      <div class="qr-block">
+        <div class="qr-box">
+          🖼️
+          <div class="qr-scan-line"></div>
+        </div>
+        <div class="qr-addr" onclick="toast('📋 Address copied!')">0x4f3a8b2c1d9e7f05a4c6e8b3d2f1a9c7b8e2</div>
+        <div class="qr-note" id="RECV_NOTE">Send only BTC to this address on the Bitcoin network. Sending other assets may result in permanent loss.</div>
+      </div>
+
+      <div class="summary-box">
+        <div class="sum-row"><span class="sum-l">Network</span><span class="sum-r">Bitcoin Mainnet</span></div>
+        <div class="sum-row"><span class="sum-l">Min. deposit</span><span class="sum-r">0.0001 BTC</span></div>
+        <div class="sum-row"><span class="sum-l">Confirmations</span><span class="sum-r">3 blocks (~30 min)</span></div>
+      </div>
+
+      <button class="qr-copy-btn" onclick="toast('📋 Address copied to clipboard!')">📋 Copy Address</button>
+    </div>
+
+    <!-- ── DEPOSIT ── -->
+    <div class="panel" id="P_deposit">
+      <div>
+        <div class="f-label">Deposit Method</div>
+        <div class="pm-row">
+          <div class="pm-opt sel" onclick="selDepMethod(this,'bank')"><div class="pm-ico">🏦</div><div class="pm-name">Bank Wire</div><div class="pm-sub">1–2 days</div></div>
+          <div class="pm-opt" onclick="selDepMethod(this,'card')"><div class="pm-ico">💳</div><div class="pm-name">Card</div><div class="pm-sub">Instant</div></div>
+          <div class="pm-opt" onclick="selDepMethod(this,'crypto')"><div class="pm-ico">🪙</div><div class="pm-name">Crypto</div><div class="pm-sub">On-chain</div></div>
+        </div>
+      </div>
+
+      <div id="DEP_BANK_FIELDS">
+        <div class="f-label">Amount (USD)</div>
+        <div class="amt-block">
+          <div class="amt-row">
+            <input class="amt-number" id="DEP_AMT" type="number" placeholder="0.00" value="1000" oninput="calcDep()"/>
+            <div class="tok-pill">
+              <div class="tok-ico" style="background:rgba(245,200,66,.12);color:#f5c842">$</div>
+              <span class="tok-sym">USD</span>
+            </div>
+          </div>
+          <div class="amt-foot">
+            <span class="amt-usd" id="DEP_USD">$1,000.00</span>
+            <span class="amt-bal" style="color:var(--gd)">0% fee on bank transfer</span>
+          </div>
+        </div>
+        <div class="pct-row" style="margin-top:.5rem">
+          <button class="pct-btn" onclick="setDepAmt(500)">$500</button>
+          <button class="pct-btn" onclick="setDepAmt(1000)">$1K</button>
+          <button class="pct-btn" onclick="setDepAmt(5000)">$5K</button>
+          <button class="pct-btn" onclick="setDepAmt(10000)">$10K</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="f-label">Destination</div>
+        <select class="f-input">
+          <option>NexTrade USD Wallet</option>
+          <option>Trading Account</option>
+          <option>Savings Account</option>
+        </select>
+      </div>
+
+      <div class="summary-box" id="DEP_SUMMARY">
+        <div class="sum-row"><span class="sum-l">Method</span><span class="sum-r">Bank Wire (ACH)</span></div>
+        <div class="sum-row"><span class="sum-l">Fee</span><span class="sum-r" style="color:var(--cy)">Free</span></div>
+        <div class="sum-row"><span class="sum-l">Processing</span><span class="sum-r">1–2 business days</span></div>
+        <div class="sum-div"></div>
+        <div class="sum-row"><span class="sum-l" style="font-weight:700;color:var(--wh)">You receive</span><span class="sum-r hl" id="DEP_GET">$1,000.00</span></div>
+      </div>
+
+      <button class="cta-btn" style="background:linear-gradient(135deg,#f5c842,#ff8c35)" onclick="submit('deposit')">
+        <span class="btn-txt">Deposit $1,000 →</span>
+        <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+      </button>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div id="DROP_OVL" onclick="closeAllDrops()"></div>
+<div class="toast" id="TOAST">Done!</div>

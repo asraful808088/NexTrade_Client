@@ -1,0 +1,52 @@
+<div class="page-wrap">
+  <app-navbar />
+  <header class="dash-header l-w">
+    <div>
+      <h1>
+  <span class="dash-header__title">Good morning, 
+    <span class="dash-header__username">{{username}}</span>
+  </span> 
+  <span>👋</span>
+</h1>
+      <p class="dash-header__date">{{ today }} &nbsp;·&nbsp; Markets open</p>
+    </div>
+    <div class="dash-header__live">
+      <span class="live-dot"></span>
+      LIVE
+    </div>
+  </header>
+    
+  <section class="stat-row l-w">
+      <app-stat-card [stat]="card_1()" [animDelay]="0 * 0.06" />
+      <app-stat-card [stat]="card_2()" [animDelay]="0 * 0.06" />
+      
+    @for (stat of stats; track stat.label; let i = $index) {
+      <app-stat-card [stat]="stat" [animDelay]="i * 0.06" />
+    }
+    
+  </section>
+
+  <section class="main-grid l-w">
+    <app-chart-card
+      class="main-grid__chart"
+      [btcPrice]="btcPrice()"
+      (onBuy)="openToast(1)"
+      (onSell)="openToast(2)"
+    />
+    <app-allocation-card class="main-grid__alloc" />
+  </section>
+
+  <section class="bottom-grid l-w">
+    <app-movers-card [coins]="moversItems()" />
+    <app-transactions-card [transactions]="transactions" />
+  </section>
+
+  <section class="last-grid l-w">
+    <app-earn-card [pools]="earnPools" />
+    <div class="last-grid__right">
+      <app-heatmap-card [cells]="heatmap" />
+      <app-alerts-card [alerts]="alerts" (toggleAlert)="toggleAlert($event)" />
+    </div>
+  </section>
+  <app-toast-box *ngIf="toast_type_code" [forBuy]="toast_type_code == 1" (onClose)="closeToast()" />
+</div>

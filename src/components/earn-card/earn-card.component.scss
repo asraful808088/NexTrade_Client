@@ -1,0 +1,66 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.earn-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.36s);
+}
+
+.earn-item {
+  display: flex;
+  align-items: center;
+  gap: calc($space-2 + 2px);
+  padding: 10px 11px;
+  border-radius: $radius-md;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid $border-subtle;
+  margin-bottom: $space-2;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba(0,230,180,0.05);
+    border-color: $border-accent;
+  }
+  &:last-child { margin-bottom: 0; }
+
+  &__icon {
+    @include icon-circle(36px);
+    border-radius: $radius-md;
+    font-size: 1rem;
+  }
+
+  &__info  { flex: 1; }
+  &__name  { font-size: $font-size-base; font-weight: 600; color: $text-primary; }
+  &__sub   { font-size: $font-size-xs; color: $text-secondary; }
+
+  &__bar {
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    margin-top: calc($space-1 + 2px);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, $cyan, $cyan-alt);
+    transition: width 1s ease;
+  }
+
+  &__apy { text-align: right; flex-shrink: 0; }
+  &__apy-val { font-family: $font-mono; font-size: $font-size-lg; font-weight: 600; color: $cyan; }
+  &__apy-lbl { font-size: $font-size-xs; color: $text-secondary; }
+}
+
+.section-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+  &__title { font-size: $font-size-md; font-weight: 700; color: $text-primary; }
+  &__action { @include glow-btn($cyan); }
+}

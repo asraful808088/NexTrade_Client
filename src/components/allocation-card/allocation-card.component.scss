@@ -1,0 +1,104 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.alloc-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.24s);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__donut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: $space-3 0 $space-4;
+  }
+
+  &__center {
+    position: absolute;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  &__center-val {
+    display: block;
+    font-family: $font-mono;
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: $text-primary;
+    line-height: 1;
+  }
+
+  &__center-lbl {
+    font-size: $font-size-xs;
+    color: $text-secondary;
+  }
+
+  &__legend {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    margin-top: auto;
+  }
+}
+
+.leg-row {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    flex: 1;
+    color: $text-primary;
+  }
+
+  &__bar {
+    width: 50px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+  }
+
+  &__bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.8s ease;
+  }
+
+  &__pct {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: $text-secondary;
+    min-width: 28px;
+    text-align: right;
+  }
+}
+
+.section-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+
+  &__title {
+    font-size: $font-size-md;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  &__action { @include glow-btn($cyan); }
+}

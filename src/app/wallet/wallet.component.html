@@ -1,0 +1,521 @@
+<app-navbar />
+<div class="pw">
+  <!-- header -->
+  <header class="ph">
+    <div>
+      
+      <h1 > <span class="ph-title">My Wallet</span>  <span>🔐</span> </h1>
+      <p class="ph-sub">Multi-chain portfolio · Connected: Ethereum Mainnet</p>
+    </div>
+    <div class="ph-actions">
+      <button class="ph-btn" (click)="onChangeToast(1)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17h16" />
+        </svg>
+        <span>Receive</span>
+      </button>
+      <button class="ph-btn primary" (click)="onChangeToast(0)">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" d="M12 19V7m0 0l-4 4m4-4l4 4M4 4h16" />
+        </svg>
+        <span>Send</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════ HERO ROW ════ -->
+  <div class="hero-row">
+    <!-- wallet hero card -->
+    <div class="wallet-hero">
+      <div class="wh-glow"></div>
+      <div class="wh-glow2"></div>
+      <div class="wh-inner">
+        <div class="wh-top">
+          <div>
+            <div class="wh-label">Total Portfolio Value</div>
+            <div class="wh-total" id="TOTAL_VAL">
+              <span>$</span><span id="TV_NUM">{{card_1().value}}</span>
+            </div>
+            <div class="wh-change">
+              <span *ngIf="card_1().changeUp" class="wh-chg-val up" id="WH_CHG">▲ {{card_1().change}}</span>
+              <span *ngIf="!card_1().changeUp" class="wh-chg-val " id="WH_CHG" style="color: red;" >▼ {{card_1().change}}</span>
+
+              
+            </div>
+          </div>
+          <div style="text-align: right">
+            <div class="wh-label" style="margin-bottom: 0.3rem">Wallet address</div>
+            <div class="wh-addr-wrap">
+              <div class="wh-addr" (click)="copyToClipboard(this.paymentAddress() ?? '')">0x4f3a…b8e2</div>
+              <div class="wh-copy" (click)="copyToClipboard(this.paymentAddress() ?? '')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wh-stats">
+          <div class="wh-stat">
+            <div class="wh-stat-l">Assets</div>
+            <div class="wh-stat-v">8</div>
+          </div>
+          <div class="wh-stat">
+            <div class="wh-stat-l">24H PnL</div>
+            <div class="wh-stat-v up">+$1,842</div>
+          </div>
+          <div class="wh-stat">
+            <div class="wh-stat-l">7D PnL</div>
+            <div class="wh-stat-v up">+$4,218</div>
+          </div>
+          <div class="wh-stat">
+            <div class="wh-stat-l">All-time</div>
+            <div class="wh-stat-v up">+$22,410</div>
+          </div>
+          <div class="wh-stat">
+            <div class="wh-stat-l">Network</div>
+            <div class="wh-stat-v">ETH</div>
+          </div>
+        </div>
+
+        <div class="wh-actions">
+          <button class="wh-act send" (click)="onChangeToast(0)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M12 19V7m0 0l-4 4m4-4l4 4" />
+            </svg>
+            Send
+          </button>
+          <button class="wh-act" (click)="onChangeToast(1)">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M12 5v12m0 0l-4-4m4 4l4-4" />
+            </svg>
+            Receive
+          </button>
+          <button class="wh-act" (click)="swtToSwft()">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+            Swap
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- portfolio donut -->
+    <div class="G portfolio-card" style="display: flex; flex-direction: column">
+      <div class="sh">
+        <span class="sh-t">Allocation</span><button class="sh-a">Details</button>
+      </div>
+
+      <div class="donut-wrap">
+        <div class="donut-svg" style="position: relative; width: 150px; height: 150px">
+          <svg width="148" height="148" viewBox="0 0 36 36">
+            <circle
+              cx="18"
+              cy="18"
+              r="14"
+              fill="none"
+              stroke="rgba(255,255,255,0.05)"
+              stroke-width="4"
+            />
+            @for (item of items2(); track item.ticker) {
+              <circle
+                cx="18"
+                cy="18"
+                r="14"
+                fill="none"
+                [attr.stroke]="item.color"
+                stroke-width="4"
+                [attr.stroke-dasharray]="item.dasharray"
+                [attr.stroke-dashoffset]="item.dashoffset"
+                transform="rotate(-90 18 18)"
+              />
+            }
+          </svg>
+
+          <div
+            class="donut-center"
+            style="
+              position: absolute;
+              inset: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <div class="donut-center-val">{{formatNumber(card_1().numbervalue)}}</div>
+            <div class="donut-center-lbl">Portfolio</div>
+          </div>
+        </div>
+
+        <div class="donut-legend" style="margin-top: 0.25rem">
+          <div class="dl-item" *ngFor="let item of items2()">
+            <div class="dl-left">
+              <div class="dl-dot" [style]="styleCss(item.ticker)"></div>
+              <span class="dl-name">{{ item.name }}</span>
+            </div>
+            <span class="dl-pct">{{ item.pct }}%</span
+            ><span class="dl-val">${{ formatNumber(item.value) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /hero-row -->
+
+  <div class="bot-row">
+    <!-- Transactions -->
+    <div class="G tx-card">
+      <div class="sh">
+        <span class="sh-t">Transaction History</span><button class="sh-a">View all</button>
+      </div>
+      <div class="tx-filter">
+        <button [class]="`tf-btn ${historyMode() == 0 ?'act':''}`" (click)="chageTabHistory(0)"  >All</button>
+        <button [class]="`tf-btn ${historyMode() == 1 ?'act':''}`" (click)="chageTabHistory(1)"  >Send</button>
+        <button [class]="`tf-btn ${historyMode() == 2 ?'act':''}`" (click)="chageTabHistory(2)"  >Receive</button>
+      </div>
+      <div id="TX_LIST">
+       <div *ngFor="let t of historyRecord">
+
+
+
+
+         <div class="tx-row" *ngIf="historyMode() == 0" >
+          <div class="tx-icon">{{ t.send ==  userEmail? '📤':'📥' }}</div>
+          <div class="tx-info">
+            <div class="tx-type">{{ t.send !=  userEmail ?'Received':'Send' }}</div>
+            <div class="tx-desc">{{ t.send ==  userEmail?`To:${truncateMiddle(t.id)}`:`From:${truncateMiddle(t.id)}` }}</div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amt" [style]="t.send ==  userEmail?'color:red':'color:#00e6b4'" >{{ t.send ==  userEmail ?`-${t.value} ${t.type}`:`+${t.value} ${t.type}` }}</div>
+            <div class="tx-meta">
+              <div class="tx-dot"></div>
+              <span style="font-size: 0.57rem; color: var(--mt); font-family: var(--M)">{{
+              timeAgo(t.time)
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="tx-row" *ngIf="historyMode() == 1 && t.send ==  userEmail" >
+          <div class="tx-icon">{{ t.send ==  userEmail? '📤':'📥' }}</div>
+          <div class="tx-info">
+            <div class="tx-type">{{ t.send !=  userEmail ?'Received':'Send' }}</div>
+            <div class="tx-desc">{{ t.send ==  userEmail?`To:${truncateMiddle(t.id)}`:`From:${truncateMiddle(t.id)}` }}</div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amt" [style]="t.send ==  userEmail?'color:red':'color:#00e6b4'" >{{ t.send ==  userEmail ?`-${t.value} ${t.type}`:`+${t.value} ${t.type}` }}</div>
+            <div class="tx-meta">
+              <div class="tx-dot"></div>
+              <span style="font-size: 0.57rem; color: var(--mt); font-family: var(--M)">{{
+              timeAgo(t.time)
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+ <div class="tx-row" *ngIf="historyMode() == 2 && t.send !=  userEmail" >
+          <div class="tx-icon">{{ t.send ==  userEmail? '📤':'📥' }}</div>
+          <div class="tx-info">
+            <div class="tx-type">{{ t.send !=  userEmail ?'Received':'Send' }}</div>
+            <div class="tx-desc">{{ t.send ==  userEmail?`To:${truncateMiddle(t.id)}`:`From:${truncateMiddle(t.id)}` }}</div>
+          </div>
+          <div class="tx-right">
+            <div class="tx-amt" [style]="t.send ==  userEmail?'color:red':'color:#00e6b4'" >{{ t.send ==  userEmail ?`-${t.value} ${t.type}`:`+${t.value} ${t.type}` }}</div>
+            <div class="tx-meta">
+              <div class="tx-dot"></div>
+              <span style="font-size: 0.57rem; color: var(--mt); font-family: var(--M)">{{
+              timeAgo(t.time)
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+       </div>
+      </div>
+    </div>
+
+    <!-- Staking / Yield -->
+    <div class="G stake-card">
+      <div class="sh">
+        <span class="sh-t">Staking & Yield</span><span class="tag tag-cy">Active</span>
+      </div>
+      <div class="stake-item">
+        <div class="stake-ico" style="background: rgba(0, 230, 180, 0.1)">◎</div>
+        <div class="stake-info">
+          <div class="stake-name">Solana Validator</div>
+          <div class="stake-sub">12 SOL staked · Epoch 580</div>
+        </div>
+        <div class="stake-right">
+          <div class="stake-apy">6.8% APY</div>
+          <div class="stake-earn">+0.068 SOL/day</div>
+        </div>
+      </div>
+      <div class="stake-item">
+        <div class="stake-ico" style="background: rgba(98, 126, 234, 0.1)">Ξ</div>
+        <div class="stake-info">
+          <div class="stake-name">ETH Liquid Staking</div>
+          <div class="stake-sub">2.5 ETH · Lido Protocol</div>
+        </div>
+        <div class="stake-right">
+          <div class="stake-apy">4.2% APY</div>
+          <div class="stake-earn">+0.029 ETH/day</div>
+        </div>
+      </div>
+      <div class="stake-item">
+        <div class="stake-ico" style="background: rgba(42, 90, 218, 0.1)">⬡</div>
+        <div class="stake-info">
+          <div class="stake-name">LINK Yield Pool</div>
+          <div class="stake-sub">100 LINK · Chainlink staking</div>
+        </div>
+        <div class="stake-right">
+          <div class="stake-apy">5.1% APY</div>
+          <div class="stake-earn">+0.014 LINK/day</div>
+        </div>
+      </div>
+      <div class="stake-item">
+        <div class="stake-ico" style="background: rgba(255, 0, 122, 0.1)">U</div>
+        <div class="stake-info">
+          <div class="stake-name">UNI LP Position</div>
+          <div class="stake-sub">ETH/USDC pool · v3</div>
+        </div>
+        <div class="stake-right">
+          <div class="stake-apy">12.4% APY</div>
+          <div class="stake-earn">+$4.20/day</div>
+        </div>
+      </div>
+      <div class="stake-total">
+        <span class="stake-total-l">Total staking rewards (30d)</span>
+        <span class="stake-total-r">+$842.50</span>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div class="G sec-card">
+      <div class="sh">
+        <span class="sh-t">Security</span><span class="tag tag-cy">Secured</span>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(0, 230, 180, 0.1); font-size: 0.85rem">🔑</div>
+        <div class="sec-info">
+          <div class="sec-label">Two-Factor Auth</div>
+          <div class="sec-sub">Google Authenticator</div>
+        </div>
+        <div class="sec-status">
+          <div class="toggle on"></div>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(98, 126, 234, 0.1); font-size: 0.85rem">
+          🛡️
+        </div>
+        <div class="sec-info">
+          <div class="sec-label">Biometric Lock</div>
+          <div class="sec-sub">Face ID enabled</div>
+        </div>
+        <div class="sec-status">
+          <div class="toggle on"></div>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(245, 200, 66, 0.1); font-size: 0.85rem">
+          📋
+        </div>
+        <div class="sec-info">
+          <div class="sec-label">Whitelist Addresses</div>
+          <div class="sec-sub">3 addresses saved</div>
+        </div>
+        <div class="sec-status">
+          <div class="toggle on"></div>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(255, 68, 102, 0.1); font-size: 0.85rem">
+          🚨
+        </div>
+        <div class="sec-info">
+          <div class="sec-label">Withdrawal Alerts</div>
+          <div class="sec-sub">Email + SMS</div>
+        </div>
+        <div class="sec-status">
+          <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(0, 230, 180, 0.08); font-size: 0.85rem">
+          ✅
+        </div>
+        <div class="sec-info">
+          <div class="sec-label">KYC Verified</div>
+          <div class="sec-sub">Level 3 · Pro access</div>
+        </div>
+        <div class="sec-status">
+          <div class="sec-verified">
+            <svg
+              width="12"
+              height="12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Verified
+          </div>
+        </div>
+      </div>
+      <div class="sec-item">
+        <div class="sec-ico" style="background: rgba(0, 196, 245, 0.1); font-size: 0.85rem">🔒</div>
+        <div class="sec-info">
+          <div class="sec-label">Auto-lock Timeout</div>
+          <div class="sec-sub">After 5 minutes</div>
+        </div>
+        <div class="sec-status">
+          <div class="toggle on"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /bot-row -->
+</div>
+<!-- /pw -->
+
+<div class="modal-bg" id="MODAL" *ngIf="tabSwt() != null">
+  <div class="modal">
+    <div class="modal-x" (click)="onActiveToast()">✕</div>
+    <div class="modal-title" id="M_TITLE" *ngIf="tabSwt() != 2">
+      <svg
+        width="18"
+        height="18"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        viewBox="0 0 24 24"
+        id="M_ICON"
+      >
+        <path stroke-linecap="round" d="M12 19V7m0 0l-4 4m4-4l4 4" />
+      </svg>
+      <div *ngIf="tabSwt() == 0">Send Crypto</div>
+      <div *ngIf="tabSwt() == 1">Address</div>
+    </div>
+    <div *ngIf="tabSwt() != 2" class="modal-tabs" id="M_TABS">
+      <div [class]="`modal-tab ${tabSwt() == 0 ? 'act' : ''}`" (click)="onChangeToast(0)">Send</div>
+      <div [class]="`modal-tab ${tabSwt() == 1 ? 'act' : ''} `" (click)="onChangeToast(1)">
+        Receive
+      </div>
+    </div>
+
+    <div id="SEND_PANEL" *ngIf="tabSwt() == 0">
+      <div class="m-field">
+        <label>Select Token</label>
+        <div class="m-tok-row" id="M_TOK_ROW">
+          <div
+            [class]="`m-tok ${item.index == activeCryptoIndex() ? 'act' : ''}`"
+            *ngFor="let item of assets()"
+            (click)="chnageCryptoIndex(item.index)"
+          >
+            <div class="m-tok-ico">{{ item.e }}</div>
+            <div class="m-tok-bal">{{ item.bal.toFixed(4) }}</div>
+            <div class="m-tok-sym">{{ item.sym }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="m-field">
+        <label>Recipient Address</label>
+        <input
+          class="m-input"
+          id="M_ADDR"
+          type="text"
+          placeholder="0x... or ENS name"
+          (input)="setPaymentAddress($event)"
+          [value]="addressCryptoForSend()"
+        />
+      </div>
+      <div class="m-field">
+        <label>Amount</label>
+        <input
+          min="0"
+          class="m-input"
+          id="M_AMT"
+          type="number"
+          placeholder="0.00"
+          (input)="setPaymentAmount($event)"
+          [value]="addressCryptoForAmount()"
+        />
+      </div>
+      <div class="err" *ngIf="paymentError()">{{ paymentError() }}</div>
+      <div class="m-summary">
+        <div class="ms-row"><span>Network</span><span>Ethereum Mainnet</span></div>
+        <div class="ms-row"><span>Gas fee</span><span>~$0.00</span></div>
+        <div class="ms-row"><span>Est. time</span><span>~30 sec</span></div>
+        <div class="ms-row"><span>USD value</span><span id="M_USD">$0.00</span></div>
+      </div>
+      <button class="m-btn" (click)="toSendCrypto()" *ngIf="!sendPanding()">Confirm Send</button>
+      <button class="m-btn" *ngIf="sendPanding()">Processing...</button>
+    </div>
+
+    <div id="RECV_PANEL" *ngIf="tabSwt() == 1">
+      <div class="qr-wrap">
+        <div class="qr-box">🖼️</div>
+        <div class="qr-addr" (click)="copyToClipboard(this.paymentAddress() ?? '')">
+          {{ this.paymentAddress() }}
+        </div>
+        <div class="qr-note">
+          Send only ETH or ERC-20 tokens to this address.<br />Sending other assets may result in
+          permanent loss.
+        </div>
+      </div>
+      <div style="height: 0.75rem"></div>
+      <button class="m-btn" (click)="copyToClipboard(this.paymentAddress() ?? '')">
+        📋 Copy Address
+      </button>
+    </div>
+
+    <div *ngIf="tabSwt() == 2">
+      <div class="modal-ring">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+      </div>
+      <div class="modal-title">
+        <span>Transaction Successful</span>
+      </div>
+      <div class="modal-sub">
+        Your order is being processed on-chain. Estimated completion in 1–3 minutes.
+      </div>
+      <div class="modal-det">
+        <div class="md-row">
+          <span>You sent</span><span id="MD_FROM">{{ addressCryptoForAmount() }}</span>
+        </div>
+        <div class="md-row"><span>Network fee</span><span>$0.00</span></div>
+        <div class="md-row"><span>Est. time</span><span>~1–3 minutes</span></div>
+      </div>
+      <button class="modal-btn" (click)="onActiveToast()">Done</button>
+    </div>
+  </div>
+</div>

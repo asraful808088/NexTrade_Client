@@ -1,0 +1,40 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.heatmap-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.4s);
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-top: $space-2;
+
+  @include mobile { grid-template-columns: repeat(3, 1fr); }
+}
+
+.heat-cell {
+  border-radius: 9px;
+  padding: 8px 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+
+  &:hover { transform: scale(1.06); filter: brightness(1.2); }
+
+  &__ticker { font-size: 0.68rem; font-weight: 700; color: #fff; }
+  &__pct    { font-size: 0.64rem; font-family: $font-mono; color: rgba(255,255,255,0.8); }
+}
+
+.section-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+  &__title { font-size: $font-size-md; font-weight: 700; color: $text-primary; }
+  &__action { @include glow-btn($cyan); }
+}

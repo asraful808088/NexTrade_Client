@@ -1,0 +1,148 @@
+// ── SCSS Variables (converted from CSS custom properties) ──
+$bg: #050d12;
+$sf: rgba(255, 255, 255, 0.034);
+$sf2: rgba(255, 255, 255, 0.058);
+$bd: rgba(255, 255, 255, 0.07);
+$bda: rgba(0, 230, 180, 0.22);
+$cy: #00e6b4;
+$cy2: #00c4f5;
+$cydim: rgba(0, 230, 180, 0.12);
+$rd: #ff4466;
+$gd: #f5c842;
+$pu: #a78bfa;
+$wh: #f0f6ff;
+$mt: rgba(200, 220, 230, 0.4);
+$F: 'Outfit', sans-serif;
+$M: 'JetBrains Mono', monospace;
+$r8: 8px;
+$r10: 10px;
+$r14: 14px;
+$rfl: 9999px;
+
+option{
+  color: #0b1820;
+}
+
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+    display: flex;
+  &.open {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+  }
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  background: #0b1820;
+  border: 1px solid $bda;
+  border-radius: 20px;
+  padding: 1.75rem;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.75),
+    0 0 40px rgba(0, 230, 180, 0.08);
+  animation: fadeUp 0.25s ease;
+}
+.modal-x {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid $bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: $mt;
+  font-size: 0.85rem;
+  transition: 0.18s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: $wh;
+  }
+}
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: $wh;
+  margin-bottom: 1.1rem;
+}
+.m-field {
+  margin-bottom: 0.8rem;
+
+  label {
+    display: block;
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: $mt;
+    margin-bottom: 0.38rem;
+  }
+}
+.m-input {
+  width: 100%;
+  padding: 10px 13px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $bd;
+  border-radius: $r10;
+  color: $wh;
+  font-size: 0.85rem;
+  outline: none;
+  transition: 0.18s;
+
+  &:focus {
+    border-color: $bda;
+    box-shadow: 0 0 0 3px rgba(0, 230, 180, 0.07);
+  }
+
+  &::placeholder { color: rgba(200, 220, 230, 0.2); }
+}
+.m-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: $r10;
+  background: linear-gradient(135deg, $cy, $cy2);
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #050d12;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(0, 230, 180, 0.38);
+  }
+}
+.m-note {
+  font-size: 0.7rem;
+  color: $mt;
+  text-align: center;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.err{
+  font-size: 12px;
+  color: $rd !important;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}

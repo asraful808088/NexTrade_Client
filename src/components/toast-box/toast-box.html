@@ -1,0 +1,85 @@
+<div class="modal-bg" id="KEY_MODAL" *ngIf="!forBuy"  >
+  <div class="modal">
+    <div class="modal-x" (click)="onCloseToast()">✕</div>
+    <div class="modal-title">💰 Choose Crypto to Sell</div>
+    <div class="m-field">
+      <label>Crypto</label>
+      <select class="m-input" (change)="onCngOption($event)">
+        <option *ngFor="let item of crypto_items; let i = index" [value]="i">
+          <div class=""  >
+            {{ item.title }}
+          </div>
+        </option>
+      </select>
+    </div>
+    <div class="m-field">
+      <label>Amount</label
+      ><input class="m-input" type="number" min="0" placeholder="amount" [(ngModel)]="amount" />
+    </div>
+
+    <div class="m-field">
+      <label>Final Amount</label
+      ><input
+        class="m-input"
+        type="text"
+        placeholder="total amount"
+        [value]="amount * crypto_items[active_item].par_doller"
+        readonly
+      />
+    </div>
+        <div  *ngIf="current_amount() !=null"  class="err">Your balance (${{current_amount()}}) is insufficient for this operation</div>
+        <div  *ngIf="error_msg() !=null"  class="err">{{error_msg()}}</div>
+
+    <button
+      class="m-btn"
+           (click)="onSellItem()"
+
+    >
+      {{!please_w8()?"Sell":"Please Wait..."}}
+    </button>
+    <div class="m-note">Your key will only be shown once. Store it securely.</div>
+  </div>
+</div>
+
+
+<div class="modal-bg" id="KEY_MODAL" *ngIf="forBuy" >
+  <div class="modal">
+    <div class="modal-x" (click)="onCloseToast()">✕</div>
+    <div class="modal-title">💰 Choose Crypto to Buy</div>
+    <div class="m-field">
+      <label>Crypto</label>
+      <select class="m-input" (change)="onCngOption($event)">
+        <option *ngFor="let item of crypto_items; let i = index" [value]="i">
+          <div class=""  >
+            {{ item.title }}
+          </div>
+        </option>
+      </select>
+    </div>
+    <div class="m-field">
+      <label>Amount</label
+      ><input class="m-input" type="number" min="0" placeholder="amount" [(ngModel)]="amount" />
+    </div>
+
+    <div class="m-field">
+      <label>Final Amount</label
+      ><input
+        class="m-input"
+        type="text"
+        placeholder="total amount"
+        [value]="amount * crypto_items[active_item].par_doller"
+        readonly
+      />
+    </div>
+    <div  *ngIf="current_amount() !=null"  class="err">Your balance (${{current_amount()}}) is insufficient for this operation</div>
+        <div  *ngIf="error_msg() !=null"  class="err">{{error_msg()}}</div>
+
+    <button
+      class="m-btn"
+      (click)="onBuyItem()"
+    >
+      {{ !please_w8()?"Buy":"Please Wait..."}}
+    </button>
+    <div class="m-note">Your key will only be shown once. Store it securely.</div>
+  </div>
+</div>

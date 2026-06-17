@@ -1,0 +1,59 @@
+<div class="chart-card">
+
+  
+  <div class="chart-card__header">
+    <div class="chart-card__coin">
+      <div class="chart-card__coin-icon">₿</div>
+      <div>
+        <div class="chart-card__coin-name">Bitcoin</div>
+        <span class="chart-card__coin-ticker">BTC / USD</span>
+      </div>
+    </div>
+    <div class="chart-card__price-block">
+      <div class="chart-card__price">
+        ${{
+          crypto.portfolio()['BTC'].timeline.current_value[activeTab()][crypto.portfolio()['BTC'].timeline.current_value[activeTab()].length - 1].toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        }}
+      </div>
+      <div class="chart-card__price-change text-up">▲ +2.18%</div>
+    </div>
+  </div>
+
+  <div class="chart-card__tabs">
+    @for (tab of tabs; track tab) {
+      <button
+        class="chart-card__tab"
+        [class.chart-card__tab--active]="activeTab() === tab"
+        (click)="setTab(tab)"
+      >
+        {{ tab }}
+      </button>
+    }
+  </div>
+
+  <div class="chart-card__chart">
+    <app-dynamic-line-chart [data]="crypto.portfolio()['BTC'].timeline.current_value[activeTab()]" />
+  </div>
+
+  <div class="chart-card__stats">
+    <div class="chart-stat">Open <span>$66,034</span></div>
+    <div class="chart-stat">High <span>$68,120</span></div>
+    <div class="chart-stat">Low <span>$65,870</span></div>
+    <div class="chart-stat">Vol <span>$38.4B</span></div>
+    <div class="chart-stat">Mkt Cap <span>$1.32T</span></div>
+  </div>
+  <div class="chart-card__actions">
+    @for (action of quickActions; track action.label) {
+      <button
+        class="qa-btn"
+        (click)="action?.func == 1 ? onBuyClick() : action?.func == 2 ? onSellClick() : apply_links(action.link)"
+      >
+        <span class="qa-btn__icon">{{ action.icon }}</span>
+        <span class="qa-btn__label">{{ action.label }}</span>
+      </button>
+    }
+  </div>
+</div>

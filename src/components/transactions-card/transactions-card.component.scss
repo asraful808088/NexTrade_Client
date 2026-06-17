@@ -1,0 +1,66 @@
+@use '../../styles/animations' as *;
+@use '../../styles/mixins' as *;
+@use '../../styles/reset' as *;
+@use '../../styles/variables' as *;
+
+
+.tx-card {
+  @include glass-card;
+  @include card-hover;
+  @include fade-up(0.32s);
+}
+
+.tx-row {
+  display: flex;
+  align-items: center;
+  gap: calc($space-2 + 2px);
+  padding: 9px calc($space-2 + 2px);
+  border-radius: $radius-md;
+  margin-bottom: $space-1;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover { background: rgba(255,255,255,0.04); }
+  &:last-child { margin-bottom: 0; }
+
+  &__icon {
+    @include icon-circle(34px);
+    border-radius: $radius-md;
+    font-size: 0.9rem;
+
+    &--buy  { background: rgba(0,230,180,0.1); border-color: rgba(0,230,180,0.2); }
+    &--sell { background: rgba(255,68,102,0.1); border-color: rgba(255,68,102,0.2); }
+    &--swap { background: rgba(0,196,245,0.1); border-color: rgba(0,196,245,0.2); }
+  }
+
+  &__info  { flex: 1; }
+  &__name  { font-size: $font-size-base; font-weight: 600; color: $text-primary; }
+  &__date  { font-size: $font-size-xs; font-family: $font-mono; color: $text-secondary; }
+  &__right { text-align: right; }
+  &__amount { font-family: $font-mono; font-size: $font-size-base; font-weight: 500; }
+  &__usd   { font-family: $font-mono; font-size: $font-size-xs; color: $text-secondary; }
+
+  &__badge {
+    font-size: $font-size-xs;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: $radius-full;
+    letter-spacing: 0.05em;
+    font-family: $font-mono;
+    margin-left: $space-2;
+    flex-shrink: 0;
+  }
+}
+
+.badge--buy  { background: rgba(0,230,180,0.12); color: $cyan; }
+.badge--sell { background: rgba(255,68,102,0.12); color: $red; }
+.badge--swap { background: rgba(0,196,245,0.12); color: $cyan-alt; }
+.text-up { color: $cyan; }
+.text-dn { color: $red; }
+
+.section-header {
+  @include flex-between;
+  margin-bottom: $space-4;
+  &__title { font-size: $font-size-md; font-weight: 700; color: $text-primary; }
+  &__action { @include glow-btn($cyan); }
+}

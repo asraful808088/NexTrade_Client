@@ -1,0 +1,673 @@
+<app-navbar />
+<div class="pw">
+  <header class="ph">
+    <div>
+      <h1 ><span class="ph-title" >Convert Crypto</span> <span>🔄</span></h1>
+      <p class="ph-sub">
+        Swap tokens instantly · Best rates aggregated across 12 liquidity sources
+      </p>
+    </div>
+    <div class="ph-pill"><span class="ph-dot"></span>LIVE RATES</div>
+  </header>
+
+  <div class="main-grid">
+    <div class="swap-card">
+      <div class="G" style="padding: 1.6rem">
+        <div class="mode-tabs">
+          <div
+            [class]="`m-tab ${active_aside_button == 0 ? 'act' : ''}`"
+            (click)="changeTabButton(0)"
+          >
+            Market
+          </div>
+          <div
+            [class]="`m-tab ${active_aside_button == 1 ? 'act' : ''}`"
+            (click)="changeTabButton(1)"
+          >
+            DCA
+          </div>
+          <div
+            [class]="`m-tab ${active_aside_button == 2 ? 'act' : ''}`"
+            (click)="changeTabButton(2)"
+          >
+            Limit
+          </div>
+        </div>
+        <!-- top-index -->
+        <div [class]="`tbox ${active_curr == 1 ? 'top-index' : ''}`" id="TIB_FROM">
+          <div class="tbox-lbl">You Send</div>
+          <div class="tbox-row">
+            <div class="t-sel" (click)="exChngeShow(1)">
+              <div class="t-ico" id="FROM_ICO" [style]="`${getStyleEXfrom }`">{{getSymbolEXfrom}}</div>
+
+              <span class="t-sym" id="FROM_SYM"> {{ firstExchangeKeyFrom }} </span>
+              <div class="t-chev"></div>
+
+              <div [class]="`t-drop ${active_curr == 1 ? '' : 'display-none'}`" id="DROP_FROM">
+
+
+
+
+
+               <div *ngFor="let item of getCryptoItems" >
+
+
+                 <div class="c-list-item" *ngIf="item != 'USD'"  (click)="crypto.setExchange(item,null)" >
+                  <div class="icon-box"  [style]="`${styleCss(item)}`" > {{cryptoIcon(item)}} </div>
+                  <div class="txt-box" >
+                    <div class="header-txt" >{{this.crypto.comData()?.items[item].name }}</div>
+                    <div class="sm-txt" >{{item }}</div>
+                  </div>
+                  <div class="amount" >{{formatNumber(this.crypto.comData()?.items[item].amount)}}</div>
+                </div>
+               </div>
+
+
+
+
+
+
+
+              </div>
+            </div>
+            <input
+              class="amt-input"
+              id="FROM_AMT"
+              type="text"
+              placeholder="0.00"
+              readonly
+              [value]="`${current_rate}%`"
+              oninput="calc()"
+            />
+          </div>
+          <div class="tbox-foot">
+            <span class="tbox-usd" id="FROM_USD">≈${{ convertFromValue }}</span>
+            <span class="tbox-bal"
+              >Bal: <b> {{ getFromAmount }} {{ firstExchangeKeyFrom }}</b></span
+            >
+          </div>
+          <div class="pct-row">
+            <button
+              [class]="`pct-btn ${current_rate == 25 ? 'act-pct-btn' : null}`"
+              (click)="send_setPct(25)"
+            >
+              25%
+            </button>
+            <button
+              [class]="`pct-btn ${current_rate == 50 ? 'act-pct-btn' : null}`"
+              (click)="send_setPct(50)"
+            >
+              50%
+            </button>
+            <button
+              [class]="`pct-btn ${current_rate == 75 ? 'act-pct-btn' : null}`"
+              (click)="send_setPct(75)"
+            >
+              75%
+            </button>
+            <button
+              [class]="`pct-btn ${current_rate == 100 ? 'act-pct-btn' : null}`"
+              (click)="send_setPct(100)"
+            >
+              MAX
+            </button>
+          </div>
+        </div>
+
+        <div class="swap-mid">
+          <button
+            [class]="`sw-btn ${rotate_animation_holder() ? 'sw-btn-rotate' : ''}`"
+            id="SWBTN"
+            (click)="rorate_animation_activtor()"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+
+        <div [class]="`tbox ${active_curr == 2 ? 'top-index' : ''}`" id="TIB_TO">
+          <div class="tbox-lbl">
+            You Receive<span
+              style="font-size: 0.58rem; color: var(--cy); margin-left: 5px; font-family: var(--M)"
+              >after fees</span
+            >
+          </div>
+          <div class="tbox-row">
+            <div class="t-sel" (click)="exChngeShow(2)">
+              <div class="t-ico" id="TO_ICO" [style]="`${getStyleEXTo }`">{{getSymbolEXTo}}</div>
+              <span class="t-sym" id="TO_SYM"> {{ firstExchangeKeyTo }} </span>
+              <div class="t-chev"></div>
+              <div [class]="`t-drop ${active_curr == 2 ? '' : 'display-none'}`" id="DROP_TO">
+
+
+  <div *ngFor="let item of getCryptoItems" >
+
+
+                 <div class="c-list-item" *ngIf="item != 'USD'"  (click)="crypto.setExchange(null,item)" >
+                  <div class="icon-box"  [style]="`${styleCss(item)}`" > {{cryptoIcon(item)}} </div>
+                  <div class="txt-box" >
+                    <div class="header-txt" >{{this.crypto.comData()?.items[item].name }}</div>
+                    <div class="sm-txt" >{{item }}</div>
+                  </div>
+                </div>
+               </div>
+
+
+
+
+                
+              </div>
+            </div>
+            <input
+              class="amt-input"
+              id="TO_AMT"
+              type="number"
+              placeholder="0.00"
+              readonly
+              style="cursor: default; opacity: 0.82"
+            />
+          </div>
+          <div class="tbox-foot">
+            <span class="tbox-usd" id="TO_USD">≈ ${{ convertFromValue }}</span>
+            <span class="tbox-bal"
+              >Bal: <b>{{ getTOAmount }} {{ firstExchangeKeyTo }}</b></span
+            >
+          </div>
+        </div>
+
+        <div class="rate-row">
+          <span class="rate-l"
+            >1 <span id="RS_FROM">BTC</span> =
+            <span id="RATE_VAL" style="color: var(--wh); font-weight: 600">19.0141 ETH</span></span
+          >
+          <span class="rate-r">Best rate</span>
+        </div>
+
+        <div class="fees">
+          <div class="fee-row">
+            <span class="fee-l">Network fee</span><span class="fee-r">$2.84</span>
+          </div>
+          <div class="fee-row">
+            <span class="fee-l"
+              >NexTrade fee <span style="font-size: 0.6rem; opacity: 0.6">(0.1%)</span></span
+            ><span class="fee-r" id="FEE_NT">$16.87</span>
+          </div>
+          <div class="fee-row">
+            <span class="fee-l">Price impact</span><span class="fee-r g">0.02%</span>
+          </div>
+          <div class="fee-div"></div>
+          <div class="fee-row">
+            <span class="fee-l" style="font-weight: 700; color: var(--wh)">Min. received</span>
+            <span class="fee-r g" id="MIN_REC">4.741 {{ firstExchangeKeyTo }}</span>
+          </div>
+        </div>
+        <div *ngIf="error_msg() != null" class="err_msg">{{ error_msg() }}</div>
+
+        <button class="cv-btn" id="CVBTN" (click)="c_converter()">
+          <span [class]="`cv-spn ${convertApply() ? 'display-none' : ''}`" id="CV_TXT"
+            >Convert BTC → ETH</span
+          >
+          <span [class]="`cv-spn ${!convertApply() ? 'display-none' : ''}`"
+            ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path
+                d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+              /></svg
+          ></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="rpanel">
+      <div class="G ch-card">
+        <div class="ch-hd">
+          <div class="ch-pair">
+            <div class="ch-icons">
+              <div
+                class="ch-i1"
+                id="CI1"
+                [style]="`${getStyleEXfrom}`"
+              >
+                {{getSymbolEXfrom}}
+              </div>
+              <div
+                class="ch-i2"
+                id="CI2"
+                [style]="`${getStyleEXTo}`"
+              >
+                  {{getSymbolEXTo}}
+              </div>
+            </div>
+            <div>
+              <div class="ch-pname" id="PAIR_NM">
+                {{ firstExchangeKeyFrom }} / {{ firstExchangeKeyTo }}
+              </div>
+              <div class="ch-psub">Exchange rate · Auto-refresh 5s</div>
+            </div>
+          </div>
+          <div class="ch-price-blk">
+            <div class="ch-price" id="PAIR_P">19.0141</div>
+            <div class="ch-chg up" id="PAIR_CHG">▲ +0.32% (24h)</div>
+          </div>
+        </div>
+        <div class="ch-tabs">
+          <button [class]="`c-tab ${activeTab() == '15m' ? 'act' : ''}`" (click)="setTab('15m')">
+            15m
+          </button>
+          <button [class]="`c-tab ${activeTab() == '1h' ? 'act' : ''}`" (click)="setTab('1h')">
+            1h
+          </button>
+          <button [class]="`c-tab ${activeTab() == '1d' ? 'act' : ''}`" (click)="setTab('1d')">
+            1d
+          </button>
+          <button [class]="`c-tab ${activeTab() == '1w' ? 'act' : ''}`" (click)="setTab('1w')">
+            1w
+          </button>
+          <button [class]="`c-tab ${activeTab() == '1m' ? 'act' : ''}`" (click)="setTab('1m')">
+            1m
+          </button>
+          <button [class]="`c-tab ${activeTab() == '1y' ? 'act' : ''}`" (click)="setTab('1y')">
+            1y
+          </button>
+        </div>
+        <div class="ch-svg">
+          <app-dynamic-line-chart
+            [data]="crypto.portfolio()[firstExchangeKeyFrom].timeline.exchange_value[activeTab()]"
+          />
+        </div>
+        <div class="ch-stats">
+          <div class="cst">Open <b id="ST_O">18.954</b></div>
+          <div class="cst">High <b id="ST_H">19.142</b></div>
+          <div class="cst">Low <b id="ST_L">18.820</b></div>
+          <div class="cst">24H Vol <b>$5.2B</b></div>
+          <div class="cst">Spread <b>0.04%</b></div>
+        </div>
+      </div>
+
+      <div class="G rc-card">
+        <div class="sh">
+          <span class="sh-t">Recent Conversions</span><button class="sh-a">View all</button>
+        </div>
+        <div id="RC_LIST">
+          <div class="rc-row">
+            <div class="rc-icons">
+              <div class="rc-i1" style="background: rgba(247, 147, 26, 0.14); color: #f7931a">
+                ₿
+              </div>
+              <div class="rc-i2" style="background: rgba(98, 126, 234, 0.14); color: #627eea">
+                Ξ
+              </div>
+            </div>
+            <div class="rc-info">
+              <div class="rc-pair">BTC → ETH</div>
+              <div class="rc-date">Today · 09:42 AM</div>
+            </div>
+            <div class="rc-amt">
+              <div class="rc-from">0.15 BTC</div>
+              <div class="rc-to">+2.852 ETH</div>
+            </div>
+            <div class="rc-dot ok"></div>
+          </div>
+          <div class="rc-row">
+            <div class="rc-icons">
+              <div class="rc-i1" style="background: rgba(0, 230, 180, 0.1); color: #00e6b4">◎</div>
+              <div class="rc-i2" style="background: rgba(0, 196, 245, 0.1); color: #00c4f5">$</div>
+            </div>
+            <div class="rc-info">
+              <div class="rc-pair">SOL → USDC</div>
+              <div class="rc-date">Yesterday · 3:15 PM</div>
+            </div>
+            <div class="rc-amt">
+              <div class="rc-from">12 SOL</div>
+              <div class="rc-to">+$2,260.80</div>
+            </div>
+            <div class="rc-dot ok"></div>
+          </div>
+          <div class="rc-row">
+            <div class="rc-icons">
+              <div class="rc-i1" style="background: rgba(245, 200, 66, 0.12); color: #f5c842">
+                $
+              </div>
+              <div class="rc-i2" style="background: rgba(98, 126, 234, 0.14); color: #627eea">
+                Ξ
+              </div>
+            </div>
+            <div class="rc-info">
+              <div class="rc-pair">USDT → ETH</div>
+              <div class="rc-date">Feb 28 · 11:00 AM</div>
+            </div>
+            <div class="rc-amt">
+              <div class="rc-from">$5,000</div>
+              <div class="rc-to">+1.409 ETH</div>
+            </div>
+            <div class="rc-dot pend"></div>
+          </div>
+          <div class="rc-row">
+            <div class="rc-icons">
+              <div class="rc-i1" style="background: rgba(232, 65, 66, 0.1); color: #e84142">◈</div>
+              <div class="rc-i2" style="background: rgba(247, 147, 26, 0.14); color: #f7931a">
+                ₿
+              </div>
+            </div>
+            <div class="rc-info">
+              <div class="rc-pair">AVAX → BTC</div>
+              <div class="rc-date">Feb 27 · 6:30 PM</div>
+            </div>
+            <div class="rc-amt">
+              <div class="rc-from">40 AVAX</div>
+              <div class="rc-to">+0.0277 BTC</div>
+            </div>
+            <div class="rc-dot ok"></div>
+          </div>
+          <div class="rc-row">
+            <div class="rc-icons">
+              <div class="rc-i1" style="background: rgba(42, 90, 218, 0.1); color: #2a5ada">⬡</div>
+              <div class="rc-i2" style="background: rgba(0, 230, 180, 0.1); color: #00e6b4">◎</div>
+            </div>
+            <div class="rc-info">
+              <div class="rc-pair">LINK → SOL</div>
+              <div class="rc-date">Feb 26 · 2:00 PM</div>
+            </div>
+            <div class="rc-amt">
+              <div class="rc-from">80 LINK</div>
+              <div class="rc-to">+8.44 SOL</div>
+            </div>
+            <div class="rc-dot ok"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="G rt-card">
+        <div class="sh">
+          <span class="sh-t">Your Asset</span><button class="sh-a">Refresh</button>
+        </div>
+        <table class="rt-tbl">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Price</th>
+              <th>5min</th>
+              <th>Volume</th>
+              <th style="text-align: right">Trend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of getCryptoItems">
+              <td>
+                <div class="rt-coin">
+                  <div class="rt-ico" [style]="`${styleCss(item)}`">{{ cryptoIcon(item) }}</div>
+                  <div>
+                    <div class="rt-name">{{ this.crypto.comData()?.items[item].name }}</div>
+                    <div class="rt-tick">{{ item }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="rt-price">
+                ${{ formatNumber(this.crypto.comData()?.items[item].new_value) }}
+              </td>
+              <td class="rt-chg up">
+                {{ formatNumber(this.crypto.comData()?.items[item].price_change_percent) }}%
+              </td>
+              <td class="rt-vol">{{ formatNumber(this.crypto.comData()?.items[item].amount) }}</td>
+              <td style="text-align: right">
+                <svg
+                  *ngIf="
+                    this.crypto.comData()?.items[item].trend == 'up' &&
+                    formatNumber(this.crypto.comData()?.items[item].price_change_percent) != `0`
+                  "
+                  width="52"
+                  height="20"
+                  viewBox="0 0 52 20"
+                >
+                  <polyline
+                    points="0,16 9,12 18,13 28,8 36,5 44,3 52,1"
+                    fill="none"
+                    stroke="#00e6b4"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <svg
+                  *ngIf="
+                    this.crypto.comData()?.items[item].trend != 'up' &&
+                    formatNumber(this.crypto.comData()?.items[item].price_change_percent) != `0`
+                  "
+                  width="52"
+                  height="20"
+                  viewBox="0 0 52 20"
+                >
+                  <polyline
+                    points="0,4 9,6 18,5 28,11 36,9 44,13 52,11"
+                    fill="none"
+                    stroke="#ff4466"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <svg
+                  *ngIf="
+                    formatNumber(this.crypto.comData()?.items[item].price_change_percent) == `0`
+                  "
+                  width="52"
+                  height="20"
+                  viewBox="0 0 52 20"
+                >
+                  <line
+                    x1="0"
+                    y1="10"
+                    x2="52"
+                    y2="10"
+                    stroke="rgba(200,220,230,.22)"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="bot-row">
+    <div class="G lim-card">
+      <div class="sh">
+        <span class="sh-t">Conversion Limits</span><span class="tag tag-cy">Pro</span>
+      </div>
+      <div class="lim-item">
+        <div class="lim-ico" style="background: rgba(0, 230, 180, 0.1)">📅</div>
+        <div class="lim-info">
+          <div class="lim-label">Daily</div>
+          <div class="lim-sub">$21,450 of $50,000 used</div>
+          <div class="lim-bar">
+            <div
+              class="lim-fill"
+              style="width: 43%; background: linear-gradient(90deg, var(--cy), var(--cy2))"
+            ></div>
+          </div>
+        </div>
+        <div class="lim-amt up">$28.5K left</div>
+      </div>
+      <div class="lim-item">
+        <div class="lim-ico" style="background: rgba(245, 200, 66, 0.1)">📆</div>
+        <div class="lim-info">
+          <div class="lim-label">Monthly</div>
+          <div class="lim-sub">$142,000 of $500,000 used</div>
+          <div class="lim-bar">
+            <div
+              class="lim-fill"
+              style="width: 28%; background: linear-gradient(90deg, var(--gd), #ff8c42)"
+            ></div>
+          </div>
+        </div>
+        <div class="lim-amt go">$358K left</div>
+      </div>
+      <div class="lim-item">
+        <div class="lim-ico" style="background: rgba(98, 126, 234, 0.1)">⚡</div>
+        <div class="lim-info">
+          <div class="lim-label">Instant (no KYC)</div>
+          <div class="lim-sub">Up to $10,000 instantly</div>
+          <div class="lim-bar"><div class="lim-fill" style="width: 0%"></div></div>
+        </div>
+        <div class="lim-amt up">Available</div>
+      </div>
+    </div>
+
+    <div class="G qp-card">
+      <div class="sh">
+        <span class="sh-t">Quick Convert</span><button class="sh-a">Customize</button>
+      </div>
+      <div class="qp-grid">
+        <div class="qp-item" (click)="crypto.setExchange('BTC', 'ETH')">
+          <div class="qp-pair">
+            <div class="qp-ico" style="background: rgba(247, 147, 26, 0.12); color: #f7931a">₿</div>
+            <span class="qp-arr">→</span>
+            <div class="qp-ico" style="background: rgba(98, 126, 234, 0.12); color: #627eea">Ξ</div>
+          </div>
+          <div class="qp-name">BTC → ETH</div>
+          <div class="qp-rate">1 BTC = 19.014 ETH</div>
+          <div class="qp-chg up">+0.32% today</div>
+        </div>
+        <div class="qp-item" (click)="crypto.setExchange('ETH', 'SOL')">
+          <div class="qp-pair">
+            <div class="qp-ico" style="background: rgba(98, 126, 234, 0.12); color: #627eea">Ξ</div>
+            <span class="qp-arr">→</span>
+            <div class="qp-ico" style="background: rgba(0, 230, 180, 0.1); color: #00e6b4">◎</div>
+          </div>
+          <div class="qp-name">ETH → SOL</div>
+          <div class="qp-rate">1 ETH = 18.82 SOL</div>
+          <div class="qp-chg up">+6.70% today</div>
+        </div>
+        <div class="qp-item" (click)="crypto.setExchange('BTC', 'SOL')">
+          <div class="qp-pair">
+            <div class="qp-ico" style="background: rgba(247, 147, 26, 0.12); color: #f7931a">₿</div>
+            <span class="qp-arr">→</span>
+            <div class="qp-ico" style="background: rgba(245, 200, 66, 0.1); color: #f5c842">$</div>
+          </div>
+          <div class="qp-name">BTC → USDT</div>
+          <div class="qp-rate">1 BTC = $67,482</div>
+          <div class="qp-chg up">+2.18% today</div>
+        </div>
+        <div class="qp-item" (click)="crypto.setExchange('SOL', 'AVAX')">
+          <div class="qp-pair">
+            <div class="qp-ico" style="background: rgba(0, 230, 180, 0.1); color: #00e6b4">◎</div>
+            <span class="qp-arr">→</span>
+            <div class="qp-ico" style="background: rgba(232, 65, 66, 0.1); color: #e84142">◈</div>
+          </div>
+          <div class="qp-name">SOL → AVAX</div>
+          <div class="qp-rate">1 SOL = 4.032 AVAX</div>
+          <div class="qp-chg dn">−1.74% today</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="G gas-card">
+      <div class="sh">
+        <span class="sh-t">Network Speed</span><span class="tag tag-gd">EVM</span>
+      </div>
+      <div class="gas-row" >
+        <div class="gas-dot" style="background: #ff6b35"></div>
+        <div class="gas-info">
+          <div class="gas-name">🐢 Slow</div>
+          <div class="gas-time">~5–10 min</div>
+        </div>
+        <div class="gas-p">
+          <div class="gas-gwei">18 Gwei</div>
+          <div class="gas-usd">$1.20</div>
+        </div>
+      </div>
+      <div class="gas-row sel" >
+        <div class="gas-dot" style="background: var(--gd)"></div>
+        <div class="gas-info">
+          <div class="gas-name">⚡ Standard</div>
+          <div class="gas-time">~1–3 min</div>
+        </div>
+        <div class="gas-p">
+          <div class="gas-gwei">28 Gwei</div>
+          <div class="gas-usd">$2.84</div>
+        </div>
+      </div>
+      <div class="gas-row" >
+        <div class="gas-dot" style="background: var(--cy)"></div>
+        <div class="gas-info">
+          <div class="gas-name">🚀 Fast</div>
+          <div class="gas-time">~&lt;30 sec</div>
+        </div>
+        <div class="gas-p">
+          <div class="gas-gwei">42 Gwei</div>
+          <div class="gas-usd">$4.60</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [class]="`modal-bg ${send_obj() ? '' : 'display-none'}`" id="MODAL">
+  <div class="modal">
+    <div class="modal-x" (click)="closeToastMsg()">✕</div>
+    <div class="modal-ring">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    </div>
+    <div class="modal-title">Conversion Submitted!</div>
+    <div class="modal-sub">
+      Your order is being processed on-chain. Estimated completion in 1–3 minutes.
+    </div>
+    <div class="modal-det">
+      <div class="md-row">
+        <span>You sent</span><span id="MD_FROM">{{ send_obj()?.sent }}</span>
+      </div>
+      <div class="md-row">
+        <span>You receive</span
+        ><span id="MD_TO" style="color: var(--cy)">{{ send_obj()?.received }}</span>
+      </div>
+      <div class="md-row">
+        <span>Exchange rate</span><span id="MD_RATE">{{ send_obj()?.exchange_rate }}</span>
+      </div>
+      <div class="md-row">
+        <span>Usd Value</span><span id="MD_RATE">{{ send_obj()?.usd_value }}</span>
+      </div>
+      <div class="md-row"><span>Network fee</span><span>$0.00</span></div>
+      <div class="md-row"><span>Est. time</span><span>~1–3 minutes</span></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <button class="modal-btn" (click)="closeToastMsg()">Done</button>
+  </div>
+</div>
+<div
+  id="OVL"
+  style="display: none; position: fixed; inset: 0; z-index: 50"
+ 
+></div>

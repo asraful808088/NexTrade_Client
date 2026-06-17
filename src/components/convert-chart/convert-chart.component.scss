@@ -1,0 +1,48 @@
+$bg: #050d12;
+$sf: rgba(255, 255, 255, 0.034);
+$sf2: rgba(255, 255, 255, 0.058);
+$bd: rgba(255, 255, 255, 0.07);
+$bda: rgba(0, 230, 180, 0.22);
+$cy: #00e6b4;
+$cy2: #00c4f5;
+$cydim: rgba(0, 230, 180, 0.12);
+$rd: #ff4466;
+$gd: #f5c842;
+$wh: #f0f6ff;
+$mt: rgba(200, 220, 230, 0.4);
+$F: 'Outfit', sans-serif;
+$M: 'JetBrains Mono', monospace;
+$r8: 8px;
+$r10: 10px;
+$r14: 14px;
+.ch-tabs {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 0.65rem;
+  .c-tab {
+    font-size: 0.68rem;
+    font-weight: 600;
+    font-family: $M;
+    padding: 4px 10px;
+    border-radius: $r8;
+    color: $mt;
+    border: 1px solid transparent;
+    transition: 0.16s;
+    background: none;
+    cursor: pointer;
+  }
+  .c-tab:hover {
+    color: $wh;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .c-tab.act {
+    background: $cydim;
+    border-color: $bda;
+    color: $cy;
+  }
+}
+.ch-svg {
+  width: 100%;
+  overflow: hidden;
+  border-radius: $r8;
+}

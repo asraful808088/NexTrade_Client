@@ -1,0 +1,39 @@
+
+    <div class="alloc-card">
+      <div class="section-header">
+        <span class="section-header__title">Portfolio Mix</span>
+        <button class="section-header__action">Rebalance</button>
+      </div>
+
+      <div class="alloc-card__donut">
+        <svg width="148" height="148" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="14" fill="none"
+                  stroke="rgba(255,255,255,0.05)" stroke-width="4"/>
+          @for (item of items2(); track item.ticker) {
+            <circle cx="18" cy="18" r="14" fill="none"
+                    [attr.stroke]="item.color"
+                    stroke-width="4"
+                    [attr.stroke-dasharray]="item.dasharray"
+                    [attr.stroke-dashoffset]="item.dashoffset"
+                    transform="rotate(-90 18 18)"/>
+          }
+        </svg>
+        <div class="alloc-card__center">
+          <span class="alloc-card__center-val">${{formatNumber(crypto.comData().totalNew)}}</span>
+          <span class="alloc-card__center-lbl">Total</span>
+        </div>
+      </div>
+
+      <div class="alloc-card__legend">
+        @for (item of items2(); track item.ticker) {
+          <div class="leg-row">
+            <div class="leg-row__dot" [style.background]="item.color"></div>
+            <div class="leg-row__name">{{ item.name }}</div>
+            <div class="leg-row__bar">
+              <div class="leg-row__bar-fill" [style.width.%]="item.pct" [style.background]="item.color"></div>
+            </div>
+            <div class="leg-row__pct">{{ item.pct }}%</div>
+          </div>
+        }
+      </div>
+    </div>  

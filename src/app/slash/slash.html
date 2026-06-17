@@ -1,0 +1,231 @@
+
+<canvas id="BG_CANVAS"></canvas>
+<div class="grain"></div>
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+<div class="glow-center"></div>
+
+<div class="layout">
+
+  <div class="left">
+    <div class="left-top">
+      <div class="logo">
+        <div class="logo-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M5.2 18.8l2.1-2.1M16.7 7.3l2.1-2.1"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-name">NexTrade</div>
+          <div class="logo-tag">Financial Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-mid">
+      <div class="hero-eyebrow"><span class="eyebrow-dot"></span>Next-generation crypto infrastructure</div>
+      <h1 class="hero-h">
+        <span class="line">Trade smarter.</span>
+        <span class="line"><span class="accent">Move money</span></span>
+        <span class="line">without limits.</span>
+      </h1>
+      <p class="hero-desc">The institutional-grade platform trusted by 280,000+ traders in 140 countries. Spot trading, OTC, custody, payments — all in one place.</p>
+
+      <div class="feat-list">
+        <div class="feat"><div class="feat-ico">⚡</div>Sub-50ms execution across 200+ markets</div>
+        <div class="feat"><div class="feat-ico">🔐</div>SOC 2 Type II · $250M insurance cover</div>
+        <div class="feat"><div class="feat-ico">🌍</div>140+ countries · 180+ currencies</div>
+        <div class="feat"><div class="feat-ico">🏦</div>OTC desk, lending, staking & API access</div>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-v" id="S_VOL">$4.8B+</div>
+          <div class="stat-l">Monthly Volume</div>
+          <div class="stat-chg">▲ +12% MoM</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-v">280K+</div>
+          <div class="stat-l">Active Traders</div>
+          <div class="stat-chg">▲ +3K this week</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-v">99.98%</div>
+          <div class="stat-l">Uptime SLA</div>
+          <div class="stat-chg" style="color:var(--cy)">● Live</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-bot">
+      <div class="ticker-wrap">
+        <div class="ticker" id="TICKER">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ RIGHT ══════════════ -->
+  <div class="right">
+
+    <div class="right-top">
+      <div class="r-lang">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        EN
+        <svg viewBox="0 0 9 5" fill="rgba(200,220,240,.4)" width="9" height="5"><path d="M0 0l4.5 5L9 0z"/></svg>
+      </div>
+      <div class="r-secure">
+        <div class="r-secure-dot"></div>
+        256-bit SSL secured
+      </div>
+    </div>
+
+    <div class="login-card">
+
+     
+
+      <!-- SUCCESS OVERLAY -->
+      <div class="success-overlay" id="SUCCESS">
+        <div class="suc-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="suc-title">Welcome back! 👋</div>
+        <div class="suc-sub">You're signed in. Redirecting to your dashboard…</div>
+        <div class="suc-user" id="SUC_EMAIL">user@example.com</div>
+        <button class="suc-cta" onclick="toast('Redirecting…')">Go to Dashboard →</button>
+      </div>
+
+      <!-- TABS -->
+      <div class="form-tabs">
+        <div class="ftab act" onclick="switchForm('login')">Sign In</div>
+        <div class="ftab" onclick="switchForm('register')">Create Account</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div class="fpanel act" id="F_login">
+        <div class="field">
+          <label>Email address</label>
+          <div class="input-wrap">
+            <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <input class="f-in" id="L_EMAIL" type="email" placeholder="your@email.com"/>
+          </div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+            <input class="f-in" id="L_PASS" type="password" placeholder="••••••••" style="padding-right:42px"/>
+            <button class="eye-btn" onclick="toggleEye('L_PASS',this)">
+              <svg id="EYE_L" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="opts-row">
+          <div class="checkbox-wrap" >
+            <div class="cb"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+            <span class="cb-lbl">Remember me</span>
+          </div>
+          <button class="forgot" >Forgot password?</button>
+        </div>
+        <button class="cta" id="L_BTN" >
+          <span class="cta-txt">Sign In →</span>
+          <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+        </button>
+        <div class="or-div"><div class="or-line"></div><span class="or-txt">or continue with</span><div class="or-line"></div></div>
+        <div class="social-row">
+          <button class="soc-btn" >
+            <div class="soc-ico" style="background:rgba(234,67,53,.15);color:#ea4335">G</div>Google
+          </button>
+          <button class="soc-btn">
+            <div class="soc-ico" style="background:rgba(255,255,255,.1);color:#fff">🍎</div>Apple
+          </button>
+          <button class="soc-btn">
+            <div class="soc-ico" style="background:rgba(247,147,26,.15);color:#f7931a">🦊</div>MetaMask
+          </button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-txt">Don't have an account? </span>
+          <span class="card-foot-link" >Create one free →</span>
+        </div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="fpanel" id="F_register">
+        <div style="display:flex;gap:.65rem">
+          <div class="field" style="flex:1">
+            <label>First name</label>
+            <div class="input-wrap">
+              <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <input class="f-in" type="text" placeholder="Jane"/>
+            </div>
+          </div>
+          <div class="field" style="flex:1">
+            <label>Last name</label>
+            <div class="input-wrap">
+              <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+              <input class="f-in" type="text" placeholder="Doe"/>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Email address</label>
+          <div class="input-wrap">
+            <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <input class="f-in" id="R_EMAIL" type="email" placeholder="your@email.com"/>
+          </div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="in-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+            <input class="f-in" id="R_PASS" type="password" placeholder="Min. 8 characters" oninput="checkStrength(this.value)" style="padding-right:42px"/>
+            <button class="eye-btn" onclick="toggleEye('R_PASS',this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="strength-wrap">
+            <div class="strength-bars">
+              <div class="sb" id="SB1"></div><div class="sb" id="SB2"></div>
+              <div class="sb" id="SB3"></div><div class="sb" id="SB4"></div>
+            </div>
+            <div class="strength-label" id="STR_LBL">Enter a password</div>
+          </div>
+        </div>
+        <div class="checkbox-wrap" onclick="toggleCb(this)" style="align-self:flex-start">
+          <div class="cb"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="2 6 5 9 10 3"/></svg></div>
+          <span class="cb-lbl">I agree to the <span style="color:var(--cy);cursor:pointer">Terms of Service</span> and <span style="color:var(--cy);cursor:pointer">Privacy Policy</span></span>
+        </div>
+        <button class="cta" id="R_BTN" onclick="doRegister()" style="background:linear-gradient(135deg,var(--cy),var(--cy2))">
+          <span class="cta-txt">Create Account →</span>
+          <span class="cta-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></span>
+        </button>
+        <div class="or-div"><div class="or-line"></div><span class="or-txt">or sign up with</span><div class="or-line"></div></div>
+        <div class="social-row">
+          <button class="soc-btn" >
+            <div class="soc-ico" style="background:rgba(234,67,53,.15);color:#ea4335">G</div>Google
+          </button>
+          <button class="soc-btn" >
+            <div class="soc-ico" style="background:rgba(255,255,255,.1);color:#fff">🍎</div>Apple
+          </button>
+          <button class="soc-btn" >
+            <div class="soc-ico" style="background:rgba(247,147,26,.15);color:#f7931a">🦊</div>MetaMask
+          </button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-txt">Already have an account? </span>
+          <span class="card-foot-link" >Sign in →</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right-bot">
+      Protected by reCAPTCHA · <a>Privacy</a> · <a>Terms</a> · <a>Help</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="TOAST">Done!</div>
